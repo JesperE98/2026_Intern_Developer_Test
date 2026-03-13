@@ -15,11 +15,14 @@ public class GameStates : MonoBehaviour {
 
     public static GameStates Instance { get; private set; }
 
-    public static event Action<States> OnStateChanged;
-    public static event Action<States> OnStateExited;
+    public event Action<States> OnStateChanged;
+    public event Action<States> OnStateExited;
 
     [SerializeField] private States startState;
     private States currentState = States.None;
+
+    [Header("Managers"), Space(5)]
+    [SerializeField] private List<Manager> managers;
 
     private void Awake() {
         if(Instance != null && Instance != this) {
@@ -29,10 +32,18 @@ public class GameStates : MonoBehaviour {
 
         Instance = this;
         DontDestroyOnLoad(Instance);
-
+        managers = new List<Manager>();
     }
 
     private void Start() {
+        managers.Add(GameManager.Instance);
+        managers.Add(UIManager.Instance);
+        managers.Add(AudioManager.Instance);
+
+        foreach(Manager manager in managers) {
+            manager.Initialize();
+        }
+
         OnSwitchState(startState);
     }
 

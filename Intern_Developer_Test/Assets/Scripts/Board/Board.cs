@@ -5,6 +5,7 @@ using System.Collections;
 [AddComponentMenu("Component Menu", 0)]
 public class Board : MonoBehaviour
 {
+
     #region Tile Map Variables
     [Header("Tile Map Settings"), Space(5)]
     [SerializeField, Tooltip("Width value for the board."), Range(0, 15)] 

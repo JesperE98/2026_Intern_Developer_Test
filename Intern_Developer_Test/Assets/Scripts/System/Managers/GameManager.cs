@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public sealed class GameManager : Manager
 {
     public static GameManager Instance { get; private set; }
+    public event Action<float> OnUpdateScore;
 
     [SerializeField]
     private Board board;
@@ -16,7 +18,12 @@ public sealed class GameManager : Manager
         get => playerScore;
         set { 
             playerScore = value;
+            OnUpdateScore?.Invoke(playerScore);
         } 
+    }
+
+    public float Highscore {
+        get => playerHighScore;
     }
 
     private void Awake() {
@@ -28,15 +35,12 @@ public sealed class GameManager : Manager
         Instance = this;
         DontDestroyOnLoad(Instance);
     }
-    private void OnEnable() {
-        GameStates.OnStateChanged += OnStateChanged;
-        GameStates.OnStateExited += OnStateChanged;
-    }
 
     private void OnDisable() {
-        GameStates.OnStateChanged -= OnStateChanged;
-        GameStates.OnStateExited -= OnStateChanged;
+        GameStates.Instance.OnStateChanged -= OnStateChanged;
+        GameStates.Instance.OnStateExited -= OnStateChanged;
     }
+
     void Start()
     {
 
@@ -53,6 +57,10 @@ public sealed class GameManager : Manager
         if (Keyboard.current.digit3Key.isPressed) {
             GameStates.Instance.OnSwitchState(GameStates.States.LevelFailed);
         }
+    }
+
+    public override void Initialize() {
+        base.Initialize();
     }
 
     protected override void OnStateChanged(GameStates.States newState) {

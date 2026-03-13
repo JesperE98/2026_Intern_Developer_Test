@@ -13,24 +13,20 @@ public sealed class AudioManager : Manager
         DontDestroyOnLoad(Instance);
     }
 
-    private void OnEnable() {
-        GameStates.OnStateChanged += OnStateChanged;
-        GameStates.OnStateExited += OnStateChanged;
-    }
-
     private void OnDisable() {
-        GameStates.OnStateChanged -= OnStateChanged;
-        GameStates.OnStateExited -= OnStateChanged;
+        GameStates.Instance.OnStateChanged -= OnStateChanged;
+        GameStates.Instance.OnStateExited -= OnStateChanged;
     }
 
     void Start()
     {
         
     }
+    public override void Initialize() {
+        base.Initialize();
 
-    void Update()
-    {
-        
+        GameStates.Instance.OnStateChanged += OnStateChanged;
+        GameStates.Instance.OnStateExited += OnStateChanged;
     }
 
     protected override void OnStateChanged(GameStates.States newState) {
