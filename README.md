@@ -1,5 +1,5 @@
 # 2026_Intern_Developer_Test
-This was my first time doing a project like this. I roughly spent around 10-11 hours on this project.
+This was my first time doing a project like this. It took me roughly 10-11 hours on this project.
 Some of the hours was spent on creating a code document for me to kinda map up on what order tasks needed to be done in. What classes to use etc...
 
 Here is a ZIP file for the docuemnts I used for the project. They were made in the program Obsidian.
