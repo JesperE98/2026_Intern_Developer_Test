@@ -42,10 +42,14 @@ public sealed class UIManager : Manager
             case GameStates.States.MainMenu:
                 break;
 
-            case GameStates.States.Gameplay:
+            case GameStates.States.LevelStarted:
                 break;
 
-            case GameStates.States.GameOver:
+            case GameStates.States.LevelFailed:
+
+                break;
+
+            case GameStates.States.LevelCompleted:
 
                 break;
         }

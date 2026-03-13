@@ -16,4 +16,5 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 0, a: 1}
   OnPressedAudioClip: {fileID: 0}
   OnPressedAnimation: {fileID: 0}
+  Type: 3
   Score: 10

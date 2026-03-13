@@ -1,5 +1,12 @@
 using UnityEngine;
-using UnityEngine.U2D;
+
+public enum GemType {
+    None,
+    BlueGem,
+    RedGem,
+    GreenGem,
+    YellowGem,
+}
 
 [CreateAssetMenu(fileName = "GemData", menuName = "Scriptable Objects/Data/Gem")]
 public class SO_Gem : ScriptableObject
@@ -16,6 +23,8 @@ public class SO_Gem : ScriptableObject
     [Tooltip("Animation to play when pressed.")]
     public Animation OnPressedAnimation;
     [Header("General Attributes"), Space(5)]
-    [Tooltip("Score to generate when being ocmbined with 2 of the same gem")]
+    [Tooltip("Sets the type of what gem it is.")]
+    public GemType Type = GemType.None;
+    [Tooltip("Score to generate when being ocmbined with 2 of the same gem.")]
     public int Score;
 }

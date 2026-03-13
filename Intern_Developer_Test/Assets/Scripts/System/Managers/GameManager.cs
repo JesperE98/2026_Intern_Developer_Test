@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public sealed class GameManager : Manager
 {
@@ -6,6 +7,17 @@ public sealed class GameManager : Manager
 
     [SerializeField]
     private Board board;
+    [SerializeField]
+    private float playerScore = 0;
+    [SerializeField]
+    private float playerHighScore = 0;
+
+    public float Score {
+        get => playerScore;
+        set { 
+            playerScore = value;
+        } 
+    }
 
     private void Awake() {
 
@@ -32,7 +44,15 @@ public sealed class GameManager : Manager
 
     void Update()
     {
-
+        if (Keyboard.current.digit1Key.isPressed) {
+            GameStates.Instance.OnSwitchState(GameStates.States.MainMenu);
+        }
+        if (Keyboard.current.digit2Key.isPressed) {
+            GameStates.Instance.OnSwitchState(GameStates.States.LevelStarted);
+        }
+        if (Keyboard.current.digit3Key.isPressed) {
+            GameStates.Instance.OnSwitchState(GameStates.States.LevelFailed);
+        }
     }
 
     protected override void OnStateChanged(GameStates.States newState) {
@@ -44,13 +64,28 @@ public sealed class GameManager : Manager
                 board.DeleteTileGrid();
                 break;
 
-            case GameStates.States.Gameplay:
+            case GameStates.States.LevelStarted:
                 board.CreateTileGrid();
+                board.CheckForMatchesAtStart();
                 break;
 
-            case GameStates.States.GameOver:
+            case GameStates.States.LevelFailed:
 
                 break;
+
+            case GameStates.States.LevelCompleted:
+
+                break;
+        }
+    }
+
+    void UpdatePlayerScore(float score) {
+        playerScore += score;
+    }
+
+    void UpdatePlayerHighScore(float score) {
+        if(score > playerHighScore) {
+            playerHighScore = score;
         }
     }
 }

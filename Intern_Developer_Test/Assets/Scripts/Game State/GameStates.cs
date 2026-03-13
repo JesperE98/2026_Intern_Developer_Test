@@ -8,8 +8,9 @@ public class GameStates : MonoBehaviour {
     public enum States {
         None = 0,
         MainMenu = 1,
-        Gameplay = 2,
-        GameOver = 3,
+        LevelStarted = 2,
+        LevelFailed = 3,
+        LevelCompleted = 4,
     };
 
     public static GameStates Instance { get; private set; }
@@ -28,6 +29,7 @@ public class GameStates : MonoBehaviour {
 
         Instance = this;
         DontDestroyOnLoad(Instance);
+
     }
 
     private void Start() {
@@ -47,11 +49,11 @@ public class GameStates : MonoBehaviour {
     }
 
     void OnEnterState(States newState) {
-        OnStateChanged.Invoke(newState);
+        OnStateChanged?.Invoke(newState);
     }
 
     void OnExitState(States outState) {
-        OnStateExited.Invoke(outState);
+        OnStateExited?.Invoke(outState);
     }
 
     public States GetCurrentState() => currentState;
