@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
         allTiles = new GameObject[width, height];
     }
 
-    public void CheckForMatchesAtStart() {
+    public void CheckForMatches() {
         List<Gem> startMatches = GetAllMatchesOnBoard();
 
         if (startMatches.Count >= 3) {
@@ -193,6 +193,8 @@ public class Board : MonoBehaviour
                 prefabCopies.Add(gemCopy);
             }
         }
+
+        CheckForMatches();
     }
 
     public void DeleteTileGrid() {
@@ -317,11 +319,14 @@ public class Board : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(gemFallDuration);
 
         // Create new Gems at the top
 
         yield return StartCoroutine(SpawnNewGems());
+
+        yield return new WaitForSeconds(gemFallDuration);
+        CheckForMatches();
     }
 
     private IEnumerator SpawnNewGems() {

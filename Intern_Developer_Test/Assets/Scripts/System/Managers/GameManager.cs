@@ -74,7 +74,6 @@ public sealed class GameManager : Manager
 
             case GameStates.States.LevelStarted:
                 board.CreateTileGrid();
-                board.CheckForMatchesAtStart();
                 break;
 
             case GameStates.States.LevelFailed:
